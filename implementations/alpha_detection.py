@@ -1,5 +1,5 @@
 """
-Implamentation of alpha detection algorithm as a function
+Implementation of alpha detection algorithm as a function
 Inputs:
     G: Graph
     k: Percentage of vertices to consider for alphas
