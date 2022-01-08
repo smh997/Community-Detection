@@ -1,14 +1,13 @@
-"""
-Implementation of alpha detection algorithm as a function
-Inputs:
-    G: Graph
-    k: Percentage of vertices to consider for alphas
-Output:
-    X: Set of alpha vertices
-"""
-
-
 def alpha_detector(G, k: float):
+    """
+    Implementation of alpha detection algorithm as a function
+    Inputs:
+        G: Graph
+        k: Percentage of vertices to consider for alphas
+    Output:
+        X: Set of alpha vertices
+    """
+
     numrank = []
     degrank = []
 
