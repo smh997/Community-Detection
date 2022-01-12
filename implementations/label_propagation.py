@@ -31,7 +31,7 @@ def propagator(chunk_of_alphas, semaphore):
                     Puv = (Wuv/sum(W))**(1/4)
                     if Puv >= random_probability:  # if P(u,v) is greater than random_probability we can propagate
                         semaphore.acquire()
-                        if v not in Comm:  # maybe another u in another thread propagated v while we were facing lock!
+                        if Comm[v] == 0:  # maybe another u in another thread propagated v while we were facing lock!
                             # Comm[v] ← u: propagating label over v
                             Comm[v] = Comm[u]
                             # Append(Origin, v): activating v for continuing propagation
