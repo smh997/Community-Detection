@@ -2,8 +2,11 @@ import os
 import sys
 from alpha_detection import alpha_detector
 from label_propagation import propagator, label_propagator
-
 import os
+
+import warnings
+warnings.filterwarnings("ignore")
+
 sys.path.insert(0, str(os.getcwd()) +  '/evaluations')
 from conductance import calc_conductance
 
@@ -32,8 +35,8 @@ k = float(input('enter k: '))
 X = alpha_detector(G, k)
 Comm = label_propagator(G, X, lamda=3, rand_list=rands)
 
-out_name = str(input('enter name of out file : '))
-out=open("./output/" +  out_name + '.txt', "w")
+out_name = str(input('enter name of out file : ')) + '.txt'
+out=open("./output/" +  out_name, "w")
 
 for key, val in Comm.items():
 	out.write(str(key) + "  " + str(val)+"\n")
