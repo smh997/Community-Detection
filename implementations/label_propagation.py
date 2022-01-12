@@ -24,14 +24,14 @@ def propagator(chunk_of_alphas, semaphore):
             count_of_unlabeled = 0  # used for checking "Comm[x] ≠ 0 ∀x ∈ N(u)"
             Nu, W = Graph[u][0], Graph[u][1]
             for v, Wuv in zip(Nu, W):  # for all v ∈ N(u) do
-                if v not in Comm:  # Comm[v] == 0, i.e. v is not visited
+                if Comm[v] == 0:  # Comm[v] == 0, i.e. v is not visited
                     count_of_unlabeled += 1
                     random_probability = float(rands[(rand_it % len(rands))])
                     # P(u,v) = Wuv^(1/4) / δ∗^(1/4)
                     Puv = (Wuv/sum(W))**(1/4)
                     if Puv >= random_probability:  # if P(u,v) is greater than random_probability we can propagate
                         semaphore.acquire()
-                        if v not in Comm:  # maybe another u in another thread propagated v while we were facing lock!
+                        if Comm[v] == 0:  # maybe another u in another thread propagated v while we were facing lock!
                             # Comm[v] ← u: propagating label over v
                             Comm[v] = Comm[u]
                             # Append(Origin, v): activating v for continuing propagation
@@ -71,7 +71,11 @@ def label_propagator(G, X, lamda, rand_list, origin_size_threshold=200, default_
     # Initialize: List Origin ← X, List Visited ← ∅, Hash Table Comm ← (v, 0) ∀v ∈ V
     Origin = X
     Visited = []
-    Comm = {}  # Comm is empty by default and we do not need to initialize it.
+    Comm = {}
+    for u, H in G.items():
+        Comm[u] = 0
+        for v in H[0]:
+            Comm[v] = 0
     rands = rand_list
     Graph = G
     add = 0
