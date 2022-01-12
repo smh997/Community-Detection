@@ -7,6 +7,7 @@ warnings.filterwarnings("ignore")
 import sys
 import os
 
+print(os.getcwd())
 sys.path.insert(0, str(os.getcwd()) +  '/implementations')
 from label_propagation import label_propagator
 from alpha_detection import alpha_detector
@@ -41,7 +42,8 @@ def read_dataset(datasetname='soc-karate-correct.txt'):
 def write_answer(Comm) :
     
     out_name = str(datetime.now()) + '.txt'
-    out=open("./output/" +  out_name , "w")
+    out_name = out_name.replace(':','_')
+    out=open("./output/" +  out_name , "w+")
 
     for key, val in Comm.items():
         out.write(str(key) + "  " + str(val)+"\n")
